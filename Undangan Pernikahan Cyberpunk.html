@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="id" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Union: Fadhilah & Shania // Cyberpunk 2027</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Orbitron & Rajdhani for futuristic aesthetics -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            cyberDark: '#080811',
+            cyberCard: 'rgba(15, 15, 28, 0.75)',
+            neonCyan: '#00f3ff',
+            neonPink: '#ff007f',
+            neonYellow: '#ffe600',
+            neonPurple: '#9d00ff'
+          },
+          fontFamily: {
+            orbitron: ['Orbitron', 'sans-serif'],
+            rajdhani: ['Rajdhani', 'sans-serif'],
+            mono: ['"Share Tech Mono"', 'monospace']
+          },
+          boxShadow: {
+            glowCyan: '0 0 15px rgba(0, 243, 255, 0.5), 0 0 35px rgba(0, 243, 255, 0.25)',
+            glowPink: '0 0 15px rgba(255, 0, 127, 0.5), 0 0 35px rgba(255, 0, 127, 0.25)',
+            innerGlowCyan: 'inset 0 0 15px rgba(0, 243, 255, 0.3)',
+            innerGlowPink: 'inset 0 0 15px rgba(255, 0, 127, 0.3)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Cyberpunk FX */
+    body {
+      background-color: #06060c;
+      color: #e0f2fe;
+      overflow-x: hidden;
+      font-family: 'Rajdhani', sans-serif;
+    }
+
+    /* Cyber grid overlay */
+    .cyber-grid {
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(0, 243, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 0, 127, 0.05) 1px, transparent 1px);
+    }
+
+    /* Scanlines screen effect */
+    .scanlines {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 99;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+      background-size: 100% 3px, 3px 100%;
+      opacity: 0.8;
+    }
+
+    /* Glitch effect on hover/load */
+    .glitch-text {
+      position: relative;
+      display: inline-block;
+    }
+    .glitch-text::before, .glitch-text::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      clip: rect(0, 0, 0, 0);
+    }
+    .glitch-text:hover::before {
+      left: -2px;
+      text-shadow: 2px 0 #00f3ff;
+      clip: rect(24px, 550px, 90px, 0);
+      animation: glitch-anim-1 2s infinite linear alternate-reverse;
+    }
+    .glitch-text:hover::after {
+      left: 2px;
+      text-shadow: -2px 0 #ff007f;
+      clip: rect(85px, 550px, 140px, 0);
+      animation: glitch-anim-2 2.5s infinite linear alternate-reverse;
+    }
+
+    @keyframes glitch-anim-1 {
+      0% { clip: rect(20px, 9999px, 15px, 0); }
+      20% { clip: rect(60px, 9999px, 75px, 0); }
+      40% { clip: rect(10px, 9999px, 40px, 0); }
+      60% { clip: rect(80px, 9999px, 20px, 0); }
+      80% { clip: rect(35px, 9999px, 95px, 0); }
+      100% { clip: rect(10px, 9999px, 50px, 0); }
+    }
+    @keyframes glitch-anim-2 {
+      0% { clip: rect(40px, 9999px, 30px, 0); }
+      25% { clip: rect(15px, 9999px, 60px, 0); }
+      50% { clip: rect(70px, 9999px, 10px, 0); }
+      75% { clip: rect(90px, 9999px, 80px, 0); }
+      100% { clip: rect(25px, 9999px, 45px, 0); }
+    }
+
+    /* Cut corner cyber HUD button & card */
+    .cyber-chamfer {
+      clip-path: polygon(
+        14px 0%, 100% 0%, 100% calc(100% - 14px), 
+        calc(100% - 14px) 100%, 0% 100%, 0% 14px
+      );
+    }
+    .cyber-chamfer-lg {
+      clip-path: polygon(
+        24px 0%, 100% 0%, 100% calc(100% - 24px), 
+        calc(100% - 24px) 100%, 0% 100%, 0% 24px
+      );
+    }
+
+    /* Glowing borders */
+    .border-glow-cyan {
+      border: 1px solid #00f3ff;
+      box-shadow: 0 0 15px rgba(0, 243, 255, 0.35);
+    }
+    .border-glow-pink {
+      border: 1px solid #ff007f;
+      box-shadow: 0 0 15px rgba(255, 0, 127, 0.35);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #080811;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #00f3ff;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #ff007f;
+    }
+  </style>
+</head>
+<body class="relative min-h-screen bg-cyberDark cyber-grid text-slate-100 selection:bg-neonPink selection:text-white">
+
+  <!-- Scanlines Effect Overlay -->
+  <div class="scanlines"></div>
+
+  <!-- AUDIO ELEMENT: JANJI SUCI - YOVIE & NUNO -->
+  <audio id="wedding-audio" loop preload="auto">
+    <source src="https://raw.githubusercontent.com/eylzki3-hash/undangan-pernikahan-/main/audio/janji-suci.mp3" type="audio/mp3">
+    <!-- Fallback source jika diperlukan -->
+    <source src="https://cdn.pixabay.com/download/audio/2022/05/16/audio_db6591201e.mp3?filename=romantic-wedding-piano-112191.mp3" type="audio/mp3">
+  </audio>
+
+  <!-- FLOATING AUDIO CONTROLLER & TRACK INFO -->
+  <div id="audio-control" class="fixed bottom-6 right-6 z-50 flex items-center gap-3">
+    <!-- Neon Track HUD Info -->
+    <div id="track-hud" class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/80 border border-neonPink/60 text-neonPink text-xs font-mono shadow-glowPink backdrop-blur-md">
+      <span class="w-2 h-2 rounded-full bg-neonPink animate-ping"></span>
+      <span class="truncate max-w-[170px]">Yovie & Nuno - Janji Suci</span>
+    </div>
+
+    <!-- Play / Pause Neon Button -->
+    <button onclick="toggleAudio()" id="audio-btn" aria-label="Toggle Musik" class="w-12 h-12 rounded-full border border-neonCyan bg-black/85 flex items-center justify-center text-neonCyan shadow-glowCyan hover:scale-110 active:scale-95 transition-all">
+      <i data-lucide="music" id="audio-icon" class="w-5 h-5 animate-pulse"></i>
+    </button>
+  </div>
+
+  <!-- ==================== COVER OVERLAY (GATEWAY) ==================== -->
+  <section id="cover-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#07070f] px-4 transition-all duration-1000">
+    <!-- Cyber Decorative Crosshairs & HUD Elements -->
+    <div class="absolute top-6 left-6 font-mono text-xs text-neonCyan tracking-widest flex items-center gap-2">
+      <span class="w-2 h-2 rounded-full bg-neonCyan animate-ping"></span>
+      SYS_INITIALIZE // ACCESS PROTOCOL 2027
+    </div>
+    <div class="absolute top-6 right-6 font-mono text-xs text-neonPink tracking-widest hidden sm:block">
+      LOC: 6.2088° S, 106.8456° E
+    </div>
+
+    <!-- Central Invitation Terminal Box -->
+    <div class="relative w-full max-w-lg p-8 sm:p-10 rounded-2xl bg-[#0e0e1a]/90 backdrop-blur-xl border border-neonCyan/40 shadow-glowCyan cyber-chamfer-lg text-center">
+      <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-0.5 bg-black border border-neonPink text-neonPink text-xs font-mono uppercase tracking-widest">
+        HOLOGRAM WEDDING PROTOCOL
+      </div>
+
+      <div class="mt-4 mb-2 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neonCyan/10 border border-neonCyan/30 text-neonCyan text-xs tracking-widest font-mono">
+        <i data-lucide="zap" class="w-3.5 h-3.5"></i> TRANSMISSION DETECTED
+      </div>
+
+      <p class="text-sm tracking-widest text-slate-400 font-mono uppercase mt-2">Special Invitation To</p>
+      <h2 id="guest-name" class="font-orbitron text-xl sm:text-2xl text-neonPink font-bold my-2 tracking-wider drop-shadow-[0_0_8px_rgba(255,0,127,0.8)]">
+        Tamu Kehormatan
+      </h2>
+
+      <p class="text-xs text-slate-400 mb-6 font-mono">You are cordially invited to witness the cybernetic holy matrimony of</p>
+
+      <h1 class="font-orbitron text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-neonCyan via-white to-neonPink tracking-wider leading-tight">
+        FADHILAH<br>
+        <span class="text-neonYellow text-2xl font-normal">&</span><br>
+        SHANIA
+      </h1>
+
+      <div class="my-6 border-t border-dashed border-slate-700"></div>
+
+      <div class="font-mono text-xs text-slate-300 space-y-1 mb-8">
+        <p><span class="text-neonCyan">DATE:</span> JUMAT, 01 JANUARI 2027</p>
+        <p><span class="text-neonPink">TIME:</span> 10:00 WIB // SYSTEM SYNC</p>
+        <p><span class="text-neonYellow">VENUE:</span> NEO HORIZON GRAND BALLROOM, SCBD</p>
+        <p class="text-[11px] text-neonCyan/80 pt-1">🎵 SOUNDTRACK: Yovie & Nuno - Janji Suci</p>
+      </div>
+
+      <!-- Unlock / Open Button -->
+      <button onclick="unlockInvitation()" class="group relative w-full py-4 px-6 font-orbitron font-bold text-sm tracking-widest uppercase bg-gradient-to-r from-neonCyan/20 to-neonPink/20 hover:from-neonCyan hover:to-neonPink hover:text-black text-neonCyan border border-neonCyan transition-all duration-300 shadow-glowCyan cyber-chamfer">
+        <span class="flex items-center justify-center gap-3">
+          <i data-lucide="lock-open" class="w-4 h-4 group-hover:scale-125 transition-transform"></i>
+          Buka Undangan & Putar Musik
+        </span>
+      </button>
+
+      <p class="text-[10px] text-slate-500 font-mono mt-4">Ketuk untuk sinkronisasi transmisi & memulai alunan Janji Suci.</p>
+    </div>
+  </section>
+
+  <!-- ==================== MAIN CONTENT WRAPPER ==================== -->
+  <main id="main-content" class="max-w-4xl mx-auto px-4 py-12 relative z-10 opacity-0 transition-opacity duration-1000">
+
+    <!-- HERO HEADER -->
+    <header class="text-center py-10 relative">
+      <div class="inline-block relative">
+        <div class="px-4 py-1 border-l-2 border-r-2 border-neonCyan bg-black/60 font-mono text-xs text-neonCyan uppercase tracking-widest mb-3">
+          [ WEDDING TRANSMISSION - 01.01.2027 ]
+        </div>
+      </div>
+      <h1 class="font-orbitron text-4xl sm:text-6xl font-black tracking-widest text-slate-100 uppercase mt-2">
+        <span class="text-neonCyan drop-shadow-[0_0_12px_#00f3ff]">FADHILAH</span>
+        <span class="text-neonPink block sm:inline sm:mx-3 text-3xl font-light">&</span>
+        <span class="text-neonPink drop-shadow-[0_0_12px_#ff007f]">SHANIA</span>
+      </h1>
+      <p class="font-mono text-sm sm:text-base text-slate-400 mt-4 tracking-widest">
+        INITIALIZING ETERNAL BOND PROTOCOL // JAKARTA CYBERSPACE
+      </p>
+    </header>
+
+    <!-- SECTION: DOA PENGANTIN / ISLAMI BLESSING -->
+    <section class="my-10 p-6 sm:p-8 rounded-2xl bg-[#0f0f1d]/80 border-glow-cyan cyber-chamfer backdrop-blur-md relative overflow-hidden">
+      <div class="absolute -right-10 -bottom-10 w-44 h-44 bg-neonCyan/10 rounded-full blur-3xl pointer-events-none"></div>
+      
+      <div class="flex items-center gap-2 mb-4 text-neonCyan font-mono text-xs tracking-wider">
+        <i data-lucide="terminal" class="w-4 h-4"></i>
+        <span>DATA_NODE // HOLY_PRAYER.EXE</span>
+      </div>
+
+      <!-- Ayat / Doa Pernikahan Islami -->
+      <div class="text-center space-y-4">
+        <p class="font-mono text-neonPink text-xl sm:text-2xl leading-relaxed tracking-wide font-semibold" dir="rtl">
+          بَارَكَ اللهُ لَكَ وَبَارَكَ عَلَيْكَ وَجَمَعَ بَيْنَكُمَا فِي خَيْرٍ
+        </p>
+        <p class="italic text-slate-300 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
+          "Semoga Allah memberkahimu di waktu bahagia dan memberkahimu di waktu susah, serta menghimpun kalian berdua dalam kebaikan."
+        </p>
+        <span class="inline-block text-xs font-mono text-neonCyan bg-neonCyan/10 px-3 py-1 rounded border border-neonCyan/30">
+          (HR. Abu Daud, Ahmad, Tirmidzi)
+        </span>
+
+        <p class="text-xs sm:text-sm text-slate-400 max-w-2xl mx-auto pt-2 leading-relaxed">
+          Dengan memohon rahmat dan ridho Allah SWT, kami mengundang Anda untuk menjadi bagian dari awal lembaran baru perjalanan hidup kami berdua menuju masa depan yang penuh berkah dan cinta sejati.
+        </p>
+      </div>
+    </section>
+
+    <!-- SECTION: COUNTDOWN TIMER -->
+    <section class="my-12 text-center">
+      <div class="inline-flex items-center gap-2 text-neonPink font-mono text-xs tracking-widest uppercase mb-4">
+        <i data-lucide="clock" class="w-4 h-4"></i> COUNTDOWN TO ZERO HOUR
+      </div>
+
+      <div class="grid grid-cols-4 gap-3 sm:gap-6 max-w-xl mx-auto">
+        <!-- Days -->
+        <div class="p-3 sm:p-5 rounded-xl bg-black/60 border border-neonCyan/40 shadow-glowCyan cyber-chamfer">
+          <div id="days" class="font-orbitron text-2xl sm:text-4xl font-extrabold text-neonCyan">00</div>
+          <div class="font-mono text-[10px] sm:text-xs text-slate-400 mt-1 uppercase">Hari</div>
+        </div>
+        <!-- Hours -->
+        <div class="p-3 sm:p-5 rounded-xl bg-black/60 border border-neonPink/40 shadow-glowPink cyber-chamfer">
+          <div id="hours" class="font-orbitron text-2xl sm:text-4xl font-extrabold text-neonPink">00</div>
+          <div class="font-mono text-[10px] sm:text-xs text-slate-400 mt-1 uppercase">Jam</div>
+        </div>
+        <!-- Minutes -->
+        <div class="p-3 sm:p-5 rounded-xl bg-black/60 border border-neonCyan/40 shadow-glowCyan cyber-chamfer">
+          <div id="minutes" class="font-orbitron text-2xl sm:text-4xl font-extrabold text-neonCyan">00</div>
+          <div class="font-mono text-[10px] sm:text-xs text-slate-400 mt-1 uppercase">Menit</div>
+        </div>
+        <!-- Seconds -->
+        <div class="p-3 sm:p-5 rounded-xl bg-black/60 border border-neonPink/40 shadow-glowPink cyber-chamfer">
+          <div id="seconds" class="font-orbitron text-2xl sm:text-4xl font-extrabold text-neonPink">00</div>
+          <div class="font-mono text-[10px] sm:text-xs text-slate-400 mt-1 uppercase">Detik</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: THE COUPLE PROFILES -->
+    <section class="my-16">
+      <div class="text-center mb-10">
+        <h2 class="font-orbitron text-2xl sm:text-3xl font-bold tracking-widest text-slate-100">
+          PROFIL <span class="text-neonCyan">MEMPELAI</span>
+        </h2>
+        <p class="font-mono text-xs text-slate-400 mt-1 uppercase">THE DIGITAL SOULS OF THIS REVOLUTION</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        
+        <!-- GROOM CARD: Fadhilah Rahmansah -->
+        <div class="relative p-6 sm:p-8 rounded-2xl bg-[#0e0e1a]/80 border-glow-cyan cyber-chamfer flex flex-col items-center text-center">
+          <div class="absolute top-3 left-3 text-[10px] font-mono text-neonCyan">UNIT_01 // GROOM</div>
+          
+          <!-- Holographic Avatar Frame -->
+          <div class="relative w-36 h-36 mb-6">
+            <div class="absolute inset-0 rounded-full border-2 border-dashed border-neonCyan animate-spin" style="animation-duration: 16s;"></div>
+            <div class="absolute -inset-1 rounded-full bg-gradient-to-tr from-neonCyan to-transparent opacity-40 blur-md"></div>
+            <div class="w-full h-full rounded-full p-2 bg-black overflow-hidden relative z-10 flex items-center justify-center">
+              <svg class="w-24 h-24 text-neonCyan/80" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+              </svg>
+            </div>
+          </div>
+
+          <h3 class="font-orbitron text-xl sm:text-2xl font-bold text-neonCyan mb-1">Fadhilah Rahmansah, S.T.</h3>
+          <p class="font-mono text-xs text-slate-400 mb-4">Putra Pertama dari Bpk. Rahmansah & Ibu Nurul Hidayah</p>
+
+          <p class="text-sm text-slate-300 leading-relaxed mb-6 font-light">
+            "Menghubungkan masa depan, menyatukan rasa. Melangkah bersama di setiap frekuensi kehidupan."
+          </p>
+
+          <a href="https://instagram.com" target="_blank" class="mt-auto inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-neonCyan/10 border border-neonCyan/40 text-neonCyan text-xs font-mono hover:bg-neonCyan hover:text-black transition-all">
+            <i data-lucide="instagram" class="w-4 h-4"></i> @fadhilah.rahmansah
+          </a>
+        </div>
+
+        <!-- BRIDE CARD: Shania Gracia -->
+        <div class="relative p-6 sm:p-8 rounded-2xl bg-[#0e0e1a]/80 border-glow-pink cyber-chamfer flex flex-col items-center text-center">
+          <div class="absolute top-3 left-3 text-[10px] font-mono text-neonPink">UNIT_02 // BRIDE</div>
+          
+          <!-- Holographic Avatar Frame -->
+          <div class="relative w-36 h-36 mb-6">
+            <div class="absolute inset-0 rounded-full border-2 border-dashed border-neonPink animate-spin" style="animation-duration: 16s; animation-direction: reverse;"></div>
+            <div class="absolute -inset-1 rounded-full bg-gradient-to-tr from-neonPink to-transparent opacity-40 blur-md"></div>
+            <div class="w-full h-full rounded-full p-2 bg-black overflow-hidden relative z-10 flex items-center justify-center">
+              <svg class="w-24 h-24 text-neonPink/80" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+              </svg>
+            </div>
+          </div>
+
+          <h3 class="font-orbitron text-xl sm:text-2xl font-bold text-neonPink mb-1">Shania Gracia, S.Ds.</h3>
+          <p class="font-mono text-xs text-slate-400 mb-4">Putri Kedua dari Bpk. Hendra Wijaya & Ibu Christine Gunawan</p>
+
+          <p class="text-sm text-slate-300 leading-relaxed mb-6 font-light">
+            "Dalam semesta penuh kemungkinan, hatiku memilihmu sebagai tempat pulang yang abadi."
+          </p>
+
+          <a href="https://instagram.com" target="_blank" class="mt-auto inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-neonPink/10 border border-neonPink/40 text-neonPink text-xs font-mono hover:bg-neonPink hover:text-black transition-all">
+            <i data-lucide="instagram" class="w-4 h-4"></i> @shaniagracia
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION: EVENT DETAILS (WAKTU & TEMPAT) -->
+    <section class="my-16">
+      <div class="text-center mb-10">
+        <h2 class="font-orbitron text-2xl sm:text-3xl font-bold tracking-widest text-slate-100">
+          EVENT <span class="text-neonCyan">COORDINATES</span>
+        </h2>
+        <p class="font-mono text-xs text-slate-400 mt-1 uppercase">TIME PROTOCOLS & SECTOR DESTINATION</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        
+        <!-- Akad Nikah -->
+        <div class="p-6 sm:p-8 rounded-2xl bg-[#0f0f1d]/90 border border-neonCyan/40 shadow-glowCyan cyber-chamfer relative overflow-hidden">
+          <div class="flex items-center justify-between mb-4">
+            <span class="px-3 py-1 rounded bg-neonCyan/10 border border-neonCyan/30 text-neonCyan font-mono text-xs">PHASE 01</span>
+            <i data-lucide="shield-check" class="w-5 h-5 text-neonCyan"></i>
+          </div>
+          <h3 class="font-orbitron text-xl font-bold text-neonCyan">AKAD NIKAH</h3>
+          <p class="text-xs font-mono text-slate-400 mb-6">Sacred Union Ceremony</p>
+
+          <div class="space-y-4 font-mono text-sm text-slate-300">
+            <div class="flex items-start gap-3">
+              <i data-lucide="calendar" class="w-4 h-4 text-neonCyan shrink-0 mt-1"></i>
+              <div>
+                <p class="font-bold text-white">Jumat, 1 Januari 2027</p>
+                <p class="text-xs text-slate-400">01.01.2027</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3">
+              <i data-lucide="clock" class="w-4 h-4 text-neonCyan shrink-0 mt-1"></i>
+              <div>
+                <p class="font-bold text-white">Pukul 10:00 WIB - 11:30 WIB</p>
+                <p class="text-xs text-slate-400">Tepat waktu / System synchronized</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3">
+              <i data-lucide="map-pin" class="w-4 h-4 text-neonCyan shrink-0 mt-1"></i>
+              <div>
+                <p class="font-bold text-white">Neo Horizon Grand Ballroom</p>
+                <p class="text-xs text-slate-400">Cyber Tower Lantai 88, SCBD Jakarta Selatan</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Resepsi Pernikahan -->
+        <div class="p-6 sm:p-8 rounded-2xl bg-[#0f0f1d]/90 border border-neonPink/40 shadow-glowPink cyber-chamfer relative overflow-hidden">
+          <div class="flex items-center justify-between mb-4">
+            <span class="px-3 py-1 rounded bg-neonPink/10 border border-neonPink/30 text-neonPink font-mono text-xs">PHASE 02</span>
+            <i data-lucide="sparkles" class="w-5 h-5 text-neonPink"></i>
+          </div>
+          <h3 class="font-orbitron text-xl font-bold text-neonPink">RESEPSI HOLOGRAFIK</h3>
+          <p class="text-xs font-mono text-slate-400 mb-6">Celebration & Cyber Banquet</p>
+
+          <div class="space-y-4 font-mono text-sm text-slate-300">
+            <div class="flex items-start gap-3">
+              <i data-lucide="calendar" class="w-4 h-4 text-neonPink shrink-0 mt-1"></i>
+              <div>
+                <p class="font-bold text-white">Jumat, 1 Januari 2027</p>
+                <p class="text-xs text-slate-400">01.01.2027</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3">
+              <i data-lucide="clock" class="w-4 h-4 text-neonPink shrink-0 mt-1"></i>
+              <div>
+                <p class="font-bold text-white">Pukul 13:00 WIB - Selesai</p>
+                <p class="text-xs text-slate-400">Neon Light Show & Dinner</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3">
+              <i data-lucide="map-pin" class="w-4 h-4 text-neonPink shrink-0 mt-1"></i>
+              <div>
+                <p class="font-bold text-white">Neo Horizon Grand Ballroom</p>
+                <p class="text-xs text-slate-400">Main Cyber Hall Lt. 88, SCBD Jakarta Selatan</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Resepsi Pernikahan -->
+        <div class="p-6 sm:p-8 rounded-2xl bg-[#0f0f1d]/90 border border-neonPink/40 shadow-glowPink cyber-chamfer relative overflow-hidden">
+          <div class="flex items-center justify-between mb-4">
+            <span class="px-3 py-1 rounded bg-neonPink/10 border border-neonPink/30 text-neonPink font-mono text-xs">PHASE 02</span>
+            <i data-lucide="sparkles" class="w-5 h-5 text-neonPink"></i>
+          </div>
+          <h3 class="font-orbitron text-xl font-bold text-neonPink">RESEPSI HOLOGRAFIK</h3>
+          <p class="text-xs font-mono text-slate-400 mb-6">Celebration & Cyber Banquet</p>
+
+          <div class="space-y-4 font-mono text-sm text-slate-300">
+            <div class="flex items-start gap-3">
+              <i data-lucide="calendar" class="w-4 h-4 text-neonPink shrink-0 mt-1"></i>
+              <div>
+                <p class="font-bold text-white">Jumat, 1 Januari 2027</p>
+                <p class="text-xs text-slate-400">01.01.2027</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3">
+              <i data-lucide="clock" class="w-4 h-4 text-neonPink shrink-0 mt-1"></i>
+              <div>
+                <p class="font-bold text-white">Pukul 13:00 WIB - Selesai</p>
+                <p class="text-xs text-slate-400">Neon Light Show & Dinner</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3">
+              <i data-lucide="map-pin" class="w-4 h-4 text-neonPink shrink-0 mt-1"></i>
+              <div>
+                <p class="font-bold text-white">Neo Horizon Grand Ballroom</p>
+                <p class="text-xs text-slate-400">Main Cyber Hall, Jakarta Selatan</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Action Buttons: Google Maps & Add to Calendar -->
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
+        <a href="https://maps.google.com" target="_blank" class="px-6 py-3 rounded-xl bg-neonCyan/15 border border-neonCyan text-neonCyan font-mono text-xs uppercase tracking-widest hover:bg-neonCyan hover:text-black transition-all flex items-center gap-2 shadow-glowCyan">
+          <i data-lucide="navigation" class="w-4 h-4"></i> Buka Google Maps
+        </a>
+        <button onclick="addToCalendar()" class="px-6 py-3 rounded-xl bg-neonPink/15 border border-neonPink text-neonPink font-mono text-xs uppercase tracking-widest hover:bg-neonPink hover:text-black transition-all flex items-center gap-2 shadow-glowPink">
+          <i data-lucide="calendar-plus" class="w-4 h-4"></i> Tambah Ke Kalender
+        </button>
+      </div>
+    </section>
+
+    <!-- SECTION: RSVP & CYBER GUESTBOOK -->
+    <section class="my-16">
+      <div class="text-center mb-10">
+        <h2 class="font-orbitron text-2xl sm:text-3xl font-bold tracking-widest text-slate-100">
+          RSVP & <span class="text-neonCyan">TRANSMISSION FEED</span>
+        </h2>
+        <p class="font-mono text-xs text-slate-400 mt-1 uppercase">KONFIRMASI KEHADIRAN & UCAPAN DOA</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- RSVP Form (5 Cols) -->
+        <div class="lg:col-span-5 p-6 rounded-2xl bg-[#0f0f1d]/90 border border-slate-700 cyber-chamfer">
+          <form id="rsvp-form" onsubmit="handleRSVP(event)" class="space-y-4">
+            <div>
+              <label class="block font-mono text-xs text-neonCyan uppercase tracking-widest mb-1">Identitas Tamu / Nama</label>
+              <input type="text" id="sender-name" required placeholder="Contoh: Rian Pratama" class="w-full px-4 py-2.5 rounded-lg bg-black/60 border border-slate-700 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-neonCyan font-mono text-sm">
+            </div>
+
+            <div>
+              <label class="block font-mono text-xs text-neonPink uppercase tracking-widest mb-1">Konfirmasi Kedatangan</label>
+              <select id="attendance-status" class="w-full px-4 py-2.5 rounded-lg bg-black/60 border border-slate-700 text-slate-100 focus:outline-none focus:border-neonPink font-mono text-sm">
+                <option value="Hadir">Pasti Hadir (Online/Offline Protocol)</option>
+                <option value="Ragu-ragu">Masih Menyesuaikan Jadwal</option>
+                <option value="Tidak Hadir">Mohon Maaf, Berhalangan</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block font-mono text-xs text-slate-400 uppercase tracking-widest mb-1">Jumlah Orang</label>
+              <select id="guest-count" class="w-full px-4 py-2.5 rounded-lg bg-black/60 border border-slate-700 text-slate-100 focus:outline-none focus:border-neonCyan font-mono text-sm">
+                <option value="1">1 Orang</option>
+                <option value="2">2 Orang</option>
+                <option value="3+">Keluarga (3+ Orang)</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block font-mono text-xs text-slate-400 uppercase tracking-widest mb-1">Pesan & Doa Restu</label>
+              <textarea id="sender-message" rows="3" required placeholder="Tuliskan ucapan selamat untuk Fadhilah & Shania..." class="w-full px-4 py-2.5 rounded-lg bg-black/60 border border-slate-700 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-neonCyan font-mono text-sm"></textarea>
+            </div>
+
+            <button type="submit" class="w-full py-3 px-6 rounded-lg bg-gradient-to-r from-neonCyan to-neonPink text-black font-orbitron font-bold text-xs uppercase tracking-widest hover:opacity-90 transition-all shadow-glowCyan">
+              Kirim Konfirmasi & Pesan
+            </button>
+          </form>
+        </div>
+
+        <!-- Guestbook Live Feed (7 Cols) -->
+        <div class="lg:col-span-7 flex flex-col p-6 rounded-2xl bg-[#0f0f1d]/90 border border-slate-700 cyber-chamfer h-[450px]">
+          <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-4 font-mono text-xs">
+            <span class="text-neonCyan flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-neonCyan animate-ping"></span>
+              LIVE_FEED // UCAPAN DOA TERBARU
+            </span>
+            <span id="total-wishes" class="text-slate-400">3 Transmisi</span>
+          </div>
+
+          <!-- Messages Scrollable Container -->
+          <div id="wishes-container" class="space-y-3 overflow-y-auto pr-2 flex-1">
+            <!-- Sample Data 1 -->
+            <div class="p-3.5 rounded-xl bg-black/50 border border-neonCyan/20">
+              <div class="flex items-center justify-between text-xs font-mono mb-1">
+                <span class="text-neonCyan font-bold">Dimas Arya</span>
+                <span class="text-slate-500 text-[10px]">Baru saja • Hadir</span>
+              </div>
+              <p class="text-xs text-slate-300 font-light">
+                Barakallahu lakum! Selamat melangkah ke fase baru Fadhilah & Shania! Semoga selalu kompak dan bahagia di era cyber ini! 🚀
+              </p>
+            </div>
+
+            <!-- Sample Data 2 -->
+            <div class="p-3.5 rounded-xl bg-black/50 border border-neonPink/20">
+              <div class="flex items-center justify-between text-xs font-mono mb-1">
+                <span class="text-neonPink font-bold">Jessica Veranda</span>
+                <span class="text-slate-500 text-[10px]">10 menit lalu • Hadir</span>
+              </div>
+              <p class="text-xs text-slate-300 font-light">
+                Happy Wedding Gracia & Fadhilah! Cantik banget undangannya super futuristik. Lancar sampai hari H yaa! ✨
+              </p>
+            </div>
+
+            <!-- Sample Data 3 -->
+            <div class="p-3.5 rounded-xl bg-black/50 border border-slate-800">
+              <div class="flex items-center justify-between text-xs font-mono mb-1">
+                <span class="text-neonYellow font-bold">Rizky & Amanda</span>
+                <span class="text-slate-500 text-[10px]">1 jam lalu • Hadir</span>
+              </div>
+              <p class="text-xs text-slate-300 font-light">
+                Selamat menempuh hidup baru sahabatku. Semoga sakinah, mawaddah, warahmah sampai maut memisahkan. Amin!
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION: DIGITAL ENVELOPE / TANDA KASIH -->
+    <section class="my-16">
+      <div class="text-center mb-10">
+        <h2 class="font-orbitron text-2xl sm:text-3xl font-bold tracking-widest text-slate-100">
+          DIGITAL <span class="text-neonPink">ENVELOPE</span>
+        </h2>
+        <p class="font-mono text-xs text-slate-400 mt-1 uppercase">TANDA KASIH / CYBER WALLET PROTOCOL</p>
+        <p class="text-xs text-slate-400 max-w-md mx-auto mt-2">
+          Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Bagi keluarga dan sahabat yang hendak memberikan tanda kasih, dapat mengirimkan melalui:
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+        
+        <!-- Rekening 1: BCA -->
+        <div class="p-6 rounded-2xl bg-[#0e0e1a]/90 border border-neonCyan/40 shadow-glowCyan cyber-chamfer text-center">
+          <div class="font-orbitron text-xs text-neonCyan font-bold mb-2">BANK CENTRAL ASIA (BCA)</div>
+          <div class="font-mono text-xl text-white font-bold tracking-wider my-3" id="rek-fadhilah">8450-1928-33</div>
+          <p class="font-mono text-xs text-slate-400 mb-4">a.n FADHILAH RAHMANSAH</p>
+          <button onclick="copyAccount('8450192833', 'btn-rek-1')" id="btn-rek-1" class="w-full py-2.5 rounded-lg bg-neonCyan/15 border border-neonCyan text-neonCyan font-mono text-xs uppercase tracking-wider hover:bg-neonCyan hover:text-black transition-all">
+            Salin Nomor Rekening
+          </button>
+        </div>
+
+        <!-- Rekening 2: Bank Mandiri -->
+        <div class="p-6 rounded-2xl bg-[#0e0e1a]/90 border border-neonPink/40 shadow-glowPink cyber-chamfer text-center">
+          <div class="font-orbitron text-xs text-neonPink font-bold mb-2">BANK MANDIRI</div>
+          <div class="font-mono text-xl text-white font-bold tracking-wider my-3" id="rek-shania">1370-0294-8110</div>
+          <p class="font-mono text-xs text-slate-400 mb-4">a.n SHANIA GRACIA</p>
+          <button onclick="copyAccount('137002948110', 'btn-rek-2')" id="btn-rek-2" class="w-full py-2.5 rounded-lg bg-neonPink/15 border border-neonPink text-neonPink font-mono text-xs uppercase tracking-wider hover:bg-neonPink hover:text-black transition-all">
+            Salin Nomor Rekening
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION: CLOSING & PROTOCOL TERMINATION -->
+    <footer class="mt-20 pt-10 border-t border-slate-800 text-center font-mono space-y-4">
+      <div class="font-orbitron text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-neonCyan to-neonPink tracking-widest">
+        FADHILAH & SHANIA
+      </div>
+      <p class="text-xs text-slate-400 max-w-md mx-auto">
+        Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.
+      </p>
+      <div class="text-[10px] text-slate-600 tracking-widest pt-4">
+        CYBERPUNK NEON GLOW WEDDING ENGINE // DESIGNED FOR 01.01.2027
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- Notification Toast Box -->
+  <div id="toast" class="fixed top-6 right-6 z-50 transform translate-x-full transition-transform duration-300 pointer-events-none">
+    <div class="flex items-center gap-3 px-4 py-3 rounded-lg bg-black/90 border border-neonCyan text-neonCyan font-mono text-xs shadow-glowCyan backdrop-blur-md">
+      <i data-lucide="check-circle" class="w-4 h-4"></i>
+      <span id="toast-message">Transmisi Berhasil</span>
+    </div>
+  </div>
+
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // Check query params for guest name (e.g., ?to=Nama+Tamu)
+    const urlParams = new URLSearchParams(window.location.search);
+    const guestParam = urlParams.get('to');
+    if (guestParam) {
+      document.getElementById('guest-name').innerText = decodeURIComponent(guestParam);
+    }
+
+    // ==================== AUDIO ENGINE: JANJI SUCI ====================
+    const weddingAudio = document.getElementById('wedding-audio');
+    let isPlaying = false;
+    let webAudioCtx = null;
+    let melodyInterval = null;
+
+    // Web Audio Fallback: Nada melodi romantis "Janji Suci" jika file eksternal terkendala
+    function playJanjiSuciFallbackMelody() {
+      if (!webAudioCtx) {
+        webAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (webAudioCtx.state === 'suspended') {
+        webAudioCtx.resume();
+      }
+
+      // Reff: "Dengarkanlah wanita pujaanku, malam ini akan kusampaikan..."
+      const melody = [
+        { note: 329.63, dur: 0.4 }, // E4
+        { note: 392.00, dur: 0.4 }, // G4
+        { note: 440.00, dur: 0.5 }, // A4
+        { note: 392.00, dur: 0.4 }, // G4
+        { note: 329.63, dur: 0.6 }, // E4
+        { note: 293.66, dur: 0.5 }, // D4
+        { note: 329.63, dur: 0.8 }  // E4
+      ];
+
+      let delay = 0;
+      melody.forEach(item => {
+        setTimeout(() => {
+          if (!isPlaying) return;
+          try {
+            const osc = webAudioCtx.createOscillator();
+            const gain = webAudioCtx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(item.note, webAudioCtx.currentTime);
+            gain.gain.setValueAtTime(0.001, webAudioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.08, webAudioCtx.currentTime + 0.1);
+            gain.gain.exponentialRampToValueAtTime(0.0001, webAudioCtx.currentTime + item.dur);
+            osc.connect(gain);
+            gain.connect(webAudioCtx.destination);
+            osc.start();
+            osc.stop(webAudioCtx.currentTime + item.dur + 0.1);
+          } catch(e) {}
+        }, delay * 1000);
+        delay += item.dur;
+      });
+    }
+
+    function playMusic() {
+      if (!weddingAudio) return;
+      weddingAudio.play().then(() => {
+        isPlaying = true;
+        updateAudioButtonUI(true);
+      }).catch(() => {
+        // Fallback jika browser memblokir audio file eksternal
+        isPlaying = true;
+        playJanjiSuciFallbackMelody();
+        melodyInterval = setInterval(playJanjiSuciFallbackMelody, 5000);
+        updateAudioButtonUI(true);
+      });
+    }
+
+    function pauseMusic() {
+      weddingAudio.pause();
+      if (melodyInterval) clearInterval(melodyInterval);
+      isPlaying = false;
+      updateAudioButtonUI(false);
+    }
+
+    function toggleAudio() {
+      if (isPlaying) {
+        pauseMusic();
+        showToast("Musik Dijeda (Muted)");
+      } else {
+        playMusic();
+        showToast("Memutar: Yovie & Nuno - Janji Suci");
+      }
+    }
+
+    function updateAudioButtonUI(playing) {
+      const icon = document.getElementById('audio-icon');
+      const trackHud = document.getElementById('track-hud');
+      if (playing) {
+        icon.setAttribute('data-lucide', 'music');
+        icon.classList.add('animate-pulse');
+        if (trackHud) trackHud.classList.remove('opacity-50');
+      } else {
+        icon.setAttribute('data-lucide', 'volume-x');
+        icon.classList.remove('animate-pulse');
+        if (trackHud) trackHud.classList.add('opacity-50');
+      }
+      lucide.createIcons();
+    }
+
+    // ==================== UNLOCK INVITATION ====================
+    function unlockInvitation() {
+      // Mulai lagu Janji Suci
+      playMusic();
+
+      // Transisi membuka layar
+      const cover = document.getElementById('cover-screen');
+      const main = document.getElementById('main-content');
+
+      cover.classList.add('opacity-0', '-translate-y-full');
+      setTimeout(() => {
+        cover.style.display = 'none';
+        main.classList.remove('opacity-0');
+        main.classList.add('opacity-100');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 700);
+    }
+
+    // ==================== COUNTDOWN TIMER ====================
+    // Target: 1 Januari 2027 pukul 10:00:00 WIB (UTC+7)
+    const targetDate = new Date('2027-01-01T10:00:00+07:00').getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const diff = targetDate - now;
+
+      if (diff > 0) {
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        document.getElementById('days').innerText = String(days).padStart(2, '0');
+        document.getElementById('hours').innerText = String(hours).padStart(2, '0');
+        document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
+        document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+      } else {
+        document.getElementById('days').innerText = "00";
+        document.getElementById('hours').innerText = "00";
+        document.getElementById('minutes').innerText = "00";
+        document.getElementById('seconds').innerText = "00";
+      }
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // ==================== RSVP & GUESTBOOK HANDLER ====================
+    let totalMessages = 3;
+
+    function handleRSVP(e) {
+      e.preventDefault();
+      const name = document.getElementById('sender-name').value.trim();
+      const status = document.getElementById('attendance-status').value;
+      const message = document.getElementById('sender-message').value.trim();
+
+      if (!name || !message) return;
+
+      const container = document.getElementById('wishes-container');
+      const newCard = document.createElement('div');
+      newCard.className = 'p-3.5 rounded-xl bg-black/50 border border-neonCyan/40 shadow-glowCyan animate-pulse';
+      newCard.innerHTML = `
+        <div class="flex items-center justify-between text-xs font-mono mb-1">
+          <span class="text-neonCyan font-bold">${escapeHtml(name)}</span>
+          <span class="text-slate-400 text-[10px]">Baru saja • ${status}</span>
+        </div>
+        <p class="text-xs text-slate-200 font-light">${escapeHtml(message)}</p>
+      `;
+
+      container.prepend(newCard);
+      setTimeout(() => newCard.classList.remove('animate-pulse'), 2000);
+
+      totalMessages++;
+      document.getElementById('total-wishes').innerText = `${totalMessages} Transmisi`;
+
+      showToast("Pesan & Konfirmasi terkirim!");
+      document.getElementById('rsvp-form').reset();
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.innerText = text;
+      return div.innerHTML;
+    }
+
+    // ==================== COPY TO CLIPBOARD ====================
+    function copyAccount(text, btnId) {
+      const tempInput = document.createElement("input");
+      tempInput.value = text;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      try {
+        document.execCommand("copy");
+        showToast("Nomor rekening berhasil disalin!");
+        const btn = document.getElementById(btnId);
+        const originalText = btn.innerText;
+        btn.innerText = "TERSALIN ✓";
+        setTimeout(() => { btn.innerText = originalText; }, 2500);
+      } catch (err) {
+        showToast("Gagal menyalin nomor rekening");
+      }
+      document.body.removeChild(tempInput);
+    }
+
+    // ==================== ADD TO GOOGLE CALENDAR ====================
+    function addToCalendar() {
+      const title = encodeURIComponent("The Wedding of Fadhilah & Shania");
+      const details = encodeURIComponent("Holy Matrimony & Cyber Reception of Fadhilah Rahmansah & Shania Gracia. Lokasi: Neo Horizon Grand Ballroom.");
+      const location = encodeURIComponent("Neo Horizon Grand Ballroom, Cyber Level 7, Kuningan Cyber District, Jakarta Selatan");
+      // 20270101T030000Z to 20270101T100000Z (UTC for 10:00 to 17:00 WIB)
+      const calendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=20270101T030000Z/20270101T100000Z&details=${details}&location=${location}`;
+      window.open(calendarUrl, '_blank');
+    }
+
+    // ==================== TOAST NOTIFICATION ====================
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-message');
+      toastMsg.innerText = message;
+      toast.classList.remove('translate-x-full');
+      setTimeout(() => {
+        toast.classList.add('translate-x-full');
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
